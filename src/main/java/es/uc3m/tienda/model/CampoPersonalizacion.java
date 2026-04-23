@@ -1,7 +1,6 @@
 package es.uc3m.tienda.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
@@ -15,7 +14,7 @@ public class CampoPersonalizacion {
 
     @Column(nullable = false, length = 255)
     @NotBlank
-    private String nombre;
+    private String name;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "tipo_campo", nullable = false)
@@ -36,6 +35,62 @@ public class CampoPersonalizacion {
     @OneToMany(mappedBy = "campo", cascade = CascadeType.ALL)
     private java.util.List<OpcionCampo> opciones;
 
-    // getters y setters...
+    
+
+    public Integer getId(){
+        return id;
+    } 
+
+    public void setId(Integer id){
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public TipoCampo getTipoCampo() {
+        return tipoCampo;
+    }
+
+    public void setTipoCampo(TipoCampo tipoCampo) {
+        this.tipoCampo = tipoCampo   ;
+    }
+
+    public boolean getObligatorio() {
+        return obligatorio;
+    }
+
+    public void setObligatorio(boolean obligatorio) {
+        this.obligatorio = obligatorio;
+    }
+
+    public String getRegexValidacion() {
+        return regexValidacion;
+    }
+
+    public void setRegexValidacion(String regexValidacion) {
+        this.regexValidacion = regexValidacion;
+    }
+
+    public Product getProduct(){
+        return product;
+    }
+
+    public void setProduct(Product product){
+        this.product = product;
+    }
+
+    public java.util.List<OpcionCampo> getOpciones(){
+        return opciones;
+    }
+
+    public void setOpciones(java.util.List<OpcionCampo> opciones){
+        this.opciones = opciones;
+    }
 }
 

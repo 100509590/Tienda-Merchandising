@@ -24,6 +24,38 @@ public class ValorCampo {
     @JoinColumn(name = "campo_id", nullable = false)
     private CampoPersonalizacion campo;
 
-    // getters y setters...
+    
+
+    public Integer getId(){
+        return id;
+    } 
+
+    public void setId(Integer id){
+        this.id = id;
+    }
+
+    public String getValorTexto(){
+        return valorTexto;
+    } 
+
+    public void setValorTexto(String valorTexto){
+        this.valorTexto = valorTexto;
+    }
+
+    public CarritoItem getCarritoItem(){
+        return carritoItem;
+    } 
+
+    public void setCarritoItem(CarritoItem carritoItem){
+        this.carritoItem = carritoItem;
+    }
+
+    public CampoPersonalizacion getCampoPersonalizacion(){
+        return campo;
+    } 
+
+    public void setCampoPersonalizacion(CampoPersonalizacion campo){
+        this.campo = campo;
+    }
 }
 

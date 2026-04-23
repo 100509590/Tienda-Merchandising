@@ -1,12 +1,12 @@
 package es.uc3m.tienda.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
 
 @Entity
+@Table(name = "product") 
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,12 +32,7 @@ public class Product {
 
     public enum Tipo {FIJO, PERSONALIZABLE}
 
-    /*
-    @OneToOne(mappedBy = "profucto", cascade = CascadeType.ALL)
-    private Foto foto;
-    */
-
-    @OneToMany(mappedBy = "product")//cascada = CascadeType.ALL)
+    @OneToMany(mappedBy = "product")
     private java.util.List<CampoPersonalizacion> campos;
     
     
@@ -66,5 +61,35 @@ public class Product {
         this.description = description;
     }
 
+    public java.math.BigDecimal getPrecioBase() {
+        return precioBase;
+    }
 
+    public void setPrecioBase(java.math.BigDecimal precioBase) {
+        this.precioBase = precioBase;
+    }
+
+    public boolean getActivo() {
+        return activo;
+    }
+
+    public void setActivo(boolean activo) {
+        this.activo = activo;
+    }
+
+    public Tipo getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(Tipo tipo) {
+        this.tipo = tipo;
+    }
+
+    public java.util.List<CampoPersonalizacion> getCampos(){
+        return campos;
+    }
+    
+    public void setCampos(java.util.List<CampoPersonalizacion> campos){
+        this.campos = campos;
+    } 
 }

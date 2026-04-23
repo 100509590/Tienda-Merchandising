@@ -24,6 +24,38 @@ public class OpcionCampo {
     @JoinColumn(name = "campo_id", nullable = false)
     private CampoPersonalizacion campo;
 
-    // getters y setters...
+    
+
+    public Integer getId(){
+        return id;
+    } 
+
+    public void setId(Integer id){
+        this.id = id;
+    }
+
+    public String getEtiquta(){
+        return etiqueta;
+    } 
+
+    public void setEtiqueta(String etiqueta){
+        this.etiqueta = etiqueta;
+    }
+
+    public java.math.BigDecimal getIncrementoPrecio(){
+        return incrementoPrecio;
+    } 
+
+    public void setIncrementoPrecio(java.math.BigDecimal incrementoPrecio){
+        this.incrementoPrecio = incrementoPrecio;
+    }
+
+    public CampoPersonalizacion getCampoPersonalizacion(){
+        return campo;
+    } 
+
+    public void setCampoPersonalizacion(CampoPersonalizacion campo){
+        this.campo = campo;
+    }
 }
 

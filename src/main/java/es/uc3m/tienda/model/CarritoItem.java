@@ -30,6 +30,54 @@ public class CarritoItem {
     @OneToMany(mappedBy = "carritoItem", cascade = CascadeType.ALL)
     private java.util.List<ValorCampo> valores;
 
-    // getters y setters...
+    
+
+    public int getId(){
+        return id;
+    }
+
+    public void setId(Integer id){
+        this.id = id;
+    }
+
+    public int getCantidad(){
+        return cantidad;
+    }
+
+    public void setCantidad(int cantidad){
+        this.cantidad = cantidad;
+    }
+
+    public java.math.BigDecimal getPrecioCalculado(){
+        return precioCalculado;
+    }
+
+    public void setPrecioCalculado(java.math.BigDecimal precioCalculado){
+        this.precioCalculado = precioCalculado;
+    }
+
+    public User getUser(){
+        return user;
+    }
+
+    public void setUser(User user){
+        this.user = user;
+    }
+
+    public Product getProduct(){
+        return product;
+    }
+
+    public void setProduct(Product product){
+        this.product = product;
+    }
+
+    public java.util.List<ValorCampo> getValores(){
+        return valores;
+    }
+
+    public void setValores(java.util.List<ValorCampo> valores){
+        this.valores = valores;
+    }
 }
 
