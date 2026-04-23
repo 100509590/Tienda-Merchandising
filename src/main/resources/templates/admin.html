@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Panel de Administración | Lumina</title>
+    <link rel="stylesheet" href="../static/css/style.css" th:href="@{/css/style.css}">
+    <style>
+        .admin-container {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 2rem;
+            align-items: start;
+        }
+        @media (max-width: 900px) {
+            .admin-container { grid-template-columns: 1fr; }
+        }
+        .admin-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+        .admin-card h2 {
+            margin-top: 0;
+            color: var(--color-primario);
+            border-bottom: 2px solid var(--color-secundario);
+            padding-bottom: 0.5rem;
+        }
+        /* Estilos Tabla Admin */
+        .tabla-admin {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .tabla-admin th, .tabla-admin td {
+            padding: 0.8rem;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+            font-size: 0.9rem;
+        }
+        .badge {
+            padding: 0.3rem 0.6rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+        .badge-fijo { background: #e3f2fd; color: #1976d2; }
+        .badge-perso { background: #f3e5f5; color: #7b1fa2; }
+        .btn-accion {
+            text-decoration: none;
+            font-size: 0.8rem;
+            margin-right: 0.5rem;
+        }
+        .btn-borrar { color: #d9534f; }
+        
+        /* Formulario Admin */
+        .form-admin .form-group { margin-bottom: 1rem; }
+        .form-admin label { display: block; font-weight: bold; margin-bottom: 0.3rem; }
+        .form-admin input, .form-admin select, .form-admin textarea {
+            width: 100%;
+            padding: 0.6rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+
+    <nav th:replace="~{fragments :: navbar}"></nav>
+
+    <main>
+        <h1>Panel de Gestión</h1>
+        
+        <div class="admin-container">
+            
+            <section class="admin-card">
+                <h2>Nueva Vela</h2>
+                <form action="#" method="post" class="form-admin">
+                    <div class="form-group">
+                        <label>Nombre:</label>
+                        <input type="text" name="nombre" placeholder="Ej: Vela Oceánica" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Precio Base (€):</label>
+                        <input type="number" step="0.01" name="precio" placeholder="10.00" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Tipo:</label>
+                        <select name="tipo">
+                            <option value="FIJO">Fija (Estándar)</option>
+                            <option value="PERSONALIZABLE">Personalizable</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Descripción:</label>
+                        <textarea name="descripcion" rows="3"></textarea>
+                    </div>
+                    <button type="submit" class="btn-auth" style="padding: 0.7rem;">Guardar Producto</button>
+                </form>
+            </section>
+
+            <section class="admin-card">
+                <h2>Inventario</h2>
+                <table class="tabla-admin">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Producto</th>
+                            <th>Tipo</th>
+                            <th>Precio</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td><strong>Vela Relax</strong></td>
+                            <td><span class="badge badge-fijo">FIJO</span></td>
+                            <td>12.50€</td>
+                            <td>✅ Activo</td>
+                            <td>
+                                <a href="#" class="btn-accion">Editar</a>
+                                <a href="#" class="btn-borrar btn-accion">Borrar</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td><strong>Crea tu vela</strong></td>
+                            <td><span class="badge badge-perso">PERSO</span></td>
+                            <td>9.90€</td>
+                            <td>✅ Activo</td>
+                            <td>
+                                <a href="#" class="btn-accion">Editar</a>
+                                <a href="#" class="btn-borrar btn-accion">Borrar</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+        </div>
+    </main>
+
+    <footer th:replace="~{fragments :: footer}"></footer>
+
+</body>
+</html>
