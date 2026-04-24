@@ -1,5 +1,6 @@
 package es.uc3m.tienda.controllers;
 
+import jakarta.persistence.*;
 import es.uc3m.tienda.model.User;
 import es.uc3m.tienda.repositories.UserRepository;
 import jakarta.validation.Valid;

@@ -1,0 +1,58 @@
+/* style.css */
+:root {
+    --color-fondo: #FDFBF7; /* Un blanco roto muy cálido */
+    --color-primario: #D4A373; /* Tono tostado/madera */
+    --color-secundario: #FAEDCD; /* Crema suave */
+    --color-texto: #3E362E; /* Marrón muy oscuro para leer bien */
+    --color-texto-claro: #FEFAE0;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--color-fondo);
+    color: var(--color-texto);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Navegación */
+nav {
+    background-color: var(--color-primario);
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+nav a {
+    color: var(--color-texto-claro);
+    text-decoration: none;
+    margin: 0 1rem;
+    font-weight: bold;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+/* Contenedor principal */
+main {
+    flex: 1; /* Para que el footer se quede abajo */
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Footer */
+footer {
+    background-color: var(--color-texto);
+    color: var(--color-texto-claro);
+    text-align: center;
+    padding: 1rem;
+    margin-top: auto;
+}
