@@ -32,8 +32,6 @@ public class Product {
 
     public enum Tipo {FIJO, PERSONALIZABLE}
 
-
-
     @OneToMany(mappedBy = "product")
     private java.util.List<CampoPersonalizacion> campos;
     
@@ -87,12 +85,11 @@ public class Product {
         this.tipo = tipo;
     }
 
-
-    /*public java.util.List<CampoPersonalizacion> getCampos() {
+    public java.util.List<CampoPersonalizacion> getCampos(){
         return campos;
     }
     
-    public void setCampos(java.util.List<CampoPersonalizacion> campos) {
+    public void setCampos(java.util.List<CampoPersonalizacion> campos){
         this.campos = campos;
-    } */
+    } 
 }

@@ -9,6 +9,7 @@ import jakarta.validation.constraints.Size;
 @Entity
 @Table(name = "user")
 public class User {
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -24,7 +25,7 @@ public class User {
     @Size(max = 100)
     private String email;
 
-    @Column(name = "password_hash", nullable = false)
+    @Column(name = "password", nullable = false)
     @NotBlank
     private String password;
 
@@ -33,6 +34,8 @@ public class User {
     private Rol rol = Rol.CLIENTE;
 
     public enum Rol {CLIENTE, ADMIN} 
+
+
 
     public Integer getId() {
         return id;
@@ -72,10 +75,5 @@ public class User {
 
     public void setRol(Rol rol) {
         this.rol = rol;
-    }
-
-    @Override
-    public String toString() {
-        return "User: " + name + " <" + email + ">";
     }
 }
