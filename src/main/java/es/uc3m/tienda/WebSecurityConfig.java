@@ -34,7 +34,7 @@ public class WebSecurityConfig {
    }
 
    @Bean
-   UserDetailsService userDetailsService(){
-        return new UserDetailsServiceImpl();
+   UserDetailsService userDetailsService(UserDetailsServiceImpl impl){
+        return impl;
    }   
 }

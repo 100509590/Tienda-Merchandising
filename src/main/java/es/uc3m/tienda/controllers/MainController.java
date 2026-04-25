@@ -4,6 +4,7 @@ import es.uc3m.tienda.model.User;
 import es.uc3m.tienda.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,10 +23,8 @@ public class MainController {
     @Autowired
     private UserRepository userRepository;
 
-    // BCrypt con factor de coste 10: estándar recomendado por Spring Security.
-    // Se instancia aquí porque MainController ya gestiona el ciclo de vida
-    // del usuario y no necesitamos un servicio separado para esta práctica.
-    private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder(10);
+    @Autowired
+    private PasswordEncoder passwordEncoder; 
 
 
     // ================================================================
