@@ -6,6 +6,6 @@ import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<User, Integer> {
     // Spring Data genera el SQL automáticamente a partir del nombre del método
-    Optional<User> findByEmail(String email);
+    User findByEmail(String email);
 }
 
