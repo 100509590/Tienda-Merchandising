@@ -16,14 +16,14 @@
 
             <section class="admin-card">
                 <h2>Nueva Vela</h2>
-                <form action="#" method="post" class="form-admin">
+                <form th:action="@{/admin/productos/nuevo}" method="post" class="form-admin">
                     <div class="form-group">
                         <label>Nombre:</label>
-                        <input type="text" name="nombre" placeholder="Ej: Vela Oceánica" required>
+                        <input type="text" name="name" placeholder="Ej: Vela Oceánica" required>
                     </div>
                     <div class="form-group">
                         <label>Precio Base (€):</label>
-                        <input type="number" step="0.01" name="precio" placeholder="10.00" required>
+                        <input type="number" step="0.01" name="precioBase" placeholder="10.00" required>
                     </div>
                     <div class="form-group">
                         <label>Tipo:</label>
@@ -43,39 +43,46 @@
             <section class="admin-card">
                 <h2>Inventario</h2>
                 <table class="tabla-admin">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Producto</th>
-                            <th>Tipo</th>
-                            <th>Precio</th>
-                            <th>Estado</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Producto</th>
+                        <th>Tipo</th>
+                        <th>Precio</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
                     <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td><strong>Vela Relax</strong></td>
-                            <td><span class="badge badge-fijo">FIJO</span></td>
-                            <td>12.50€</td>
-                            <td>✅ Activo</td>
-                            <td>
-                                <a href="#" class="btn-accion">Editar</a>
-                                <a href="#" class="btn-accion btn-borrar">Borrar</a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td><strong>Crea tu vela</strong></td>
-                            <td><span class="badge badge-perso">PERSO</span></td>
-                            <td>9.90€</td>
-                            <td>✅ Activo</td>
-                            <td>
-                                <a href="#" class="btn-accion">Editar</a>
-                                <a href="#" class="btn-accion btn-borrar">Borrar</a>
-                            </td>
-                        </tr>
+                        <thead>
+                            <tr th:each="p : ${productos}">
+                                <td th:text="${p.id}"></td>
+                                <td th:text="${p.name}"></td>
+                                <td>
+                                    <span th:class="${p.tipo == T(es.uc3m.tienda.model.Product.Tipo).FIJO}
+                                                ? 'badge badge-fijo' : 'badge badge-perso'"
+                                      th:text="${p.tipo}"></span>
+                                </td>
+                                <td th:text="${p.precioBase} + '€'"></td>
+                                <td>
+                                    <span th:if="${p.activo}">✅ Activo</span>
+                                    <span th:unless="${p.activo}">⏸ Inactivo</span>
+                                </td>
+                                <td>
+                                    <form th:action="@{/admin/productos/{id}/activar(id=${p.id})}"
+                                        method="post" style="display:inline">
+                                      <button th:if="${!p.activo}" class="btn-accion">Publicar</button>
+                                    </form>
+                                    <form th:action="@{/admin/productos/{id}/desactivar(id=${p.id})}"
+                                        method="post" style="display:inline">
+                                        <button th:if="${p.activo}" class="btn-accion">Retirar</button>
+                                    </form>
+                                    <form th:action="@{/admin/productos/{id}/borrar(id=${p.id})}"
+                                        method="post" style="display:inline">
+                                        <button class="btn-accion btn-borrar">Borrar</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        </thead>                       
                     </tbody>
                 </table>
             </section>

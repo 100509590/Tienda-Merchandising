@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Detalle del Producto | Lumina</title>
+    <title th:text="${producto.name} + ' | Lumina'">Detalle | Lumina</title>
     <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
@@ -11,49 +11,120 @@
 
     <main>
         <div class="detalle-container">
+
             <div class="detalle-imagen">
-                📸 Imagen de la Vela
+                🕯️ Imagen de la Vela
             </div>
 
             <div class="detalle-info">
-                <h1>Crea tu vela</h1>
-                <p>Diseña tu propia vela eligiendo aroma, color, intensidad y packaging.</p>
+                <h1 th:text="${producto.name}">Nombre del producto</h1>
+                <p th:text="${producto.description}">Descripción del producto.</p>
 
                 <div class="precio-destacado">
-                    Total: <span id="precio-dinamico">9.90</span> €
+                    Precio base: <span th:text="${producto.precioBase} + ' €'">0.00 €</span>
                 </div>
 
-                <form action="#" method="post" class="formulario-personalizacion">
+                <div th:if="${producto.tipo.name() == 'FIJO'}">
+                    <form th:action="@{/carrito/añadir}" method="post">
+                        <input type="hidden" name="productoId" th:value="${producto.id}">
 
-                    <div class="form-group">
-                        <label for="aroma">1. Elige el Aroma:</label>
-                        <select id="aroma" name="aroma">
-                            <option value="0">Lavanda (+0.00€)</option>
-                            <option value="1.5">Vainilla (+1.50€)</option>
-                            <option value="2.0">Sándalo (+2.00€)</option>
-                            <option value="1.0">Cítrico (+1.00€)</option>
-                        </select>
+                        <div class="form-group">
+                            <label for="cantidad">Cantidad:</label>
+                            <input type="number" id="cantidad" name="cantidad"
+                                   value="1" min="1" max="99">
+                        </div>
+
+                        <button type="submit" class="btn-comprar">Añadir al Carrito</button>
+                    </form>
+                </div>
+
+                <div th:if="${producto.tipo.name() == 'PERSONALIZABLE'}">
+                    <div class="precio-destacado">
+                        Total: <span id="precio-total" th:text="${producto.precioBase} + ' €'">0.00 €</span>
                     </div>
 
-                    <div class="form-group">
-                        <label for="intensidad">2. Intensidad:</label>
-                        <select id="intensidad" name="intensidad">
-                            <option value="0">Suave</option>
-                            <option value="0">Media</option>
-                            <option value="1.0">Fuerte (+1.00€)</option>
-                        </select>
-                    </div>
+                    <form th:action="@{/carrito/añadir}" method="post"
+                          class="formulario-personalizacion">
+                        <input type="hidden" name="productoId" th:value="${producto.id}">
 
-                    <div class="form-group">
-                        <label for="mensaje">3. Mensaje Personalizado (Máx 40 caracteres):</label>
-                        <input type="text" id="mensaje" name="mensaje" placeholder="Ej: Feliz aniversario..." maxlength="40">
-                    </div>
+                        <div th:each="campo, i : ${producto.campos}" class="form-group">
 
-                    <button type="submit" class="btn-comprar">Añadir al Carrito</button>
-                </form>
+                            <label th:for="'campo_' + ${campo.id}"
+                                   th:text="${i.count} + '. ' + ${campo.name}
+                                            + (${campo.obligatorio} ? ' *' : ' (opcional)')">
+                            </label>
+
+                           <select th:if="${campo.tipoCampo.name() == 'SELECCION'}"
+                                    th:id="'campo_' + ${campo.id}"
+                                    th:name="'campo_' + ${campo.id}"
+                                    class="campo-precio"
+                                    th:data-base="${producto.precioBase}">
+                                <option th:each="opcion : ${campo.opciones}"
+                                        th:value="${opcion.id}"
+                                        th:text="${opcion.etiqueta}
+                                                 + (${opcion.incrementoPrecio} > 0
+                                                    ? ' (+' + ${opcion.incrementoPrecio} + '€)'
+                                                    : '')"
+                                        th:data-precio="${opcion.incrementoPrecio}">
+                                </option>
+                            </select>
+
+                            <input th:if="${campo.tipoCampo.name() == 'TEXTO'}"
+                                   type="text"
+                                   th:id="'campo_' + ${campo.id}"
+                                   th:name="'campo_' + ${campo.id}"
+                                   th:pattern="${campo.regexValidacion != null
+                                                ? campo.regexValidacion : ''}"
+                                   th:required="${campo.obligatorio}"
+                                   placeholder="Escribe aquí...">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="cantidad">Cantidad:</label>
+                            <input type="number" id="cantidad" name="cantidad"
+                                   value="1" min="1" max="99">
+                        </div>
+
+                        <button type="submit" class="btn-comprar">Añadir al Carrito</button>
+                    </form>
+                </div>
+
+                <p style="margin-top: 1.5rem;">
+                    <a th:href="@{/}">← Volver al catálogo</a>
+                </p>
             </div>
         </div>
     </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const selects = document.querySelectorAll('.campo-precio');
+            const precioSpan = document.getElementById('precio-total');
+            if (!precioSpan || selects.length === 0) return;
+
+            const precioBase = parseFloat(
+                selects[0].getAttribute('data-base') || '0'
+            );
+
+            function actualizarPrecio() {
+                let total = precioBase;
+                selects.forEach(function (sel) {
+                    const opcionSeleccionada = sel.options[sel.selectedIndex];
+                    const incremento = parseFloat(
+                        opcionSeleccionada.getAttribute('data-precio') || '0'
+                    );
+                    total += incremento;
+                });
+                precioSpan.textContent = total.toFixed(2) + ' €';
+            }
+
+            selects.forEach(function (sel) {
+                sel.addEventListener('change', actualizarPrecio);
+            });
+
+            actualizarPrecio();
+        });
+    </script>
 
     <footer th:replace="~{fragments :: footer}"></footer>
 

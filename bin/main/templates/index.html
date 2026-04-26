@@ -17,36 +17,16 @@
 
         <div class="contenedor-productos">
 
-            <div class="card">
-                <div class="card-img">Imagen Vela Relax</div>
+            <div th:each="p : ${productos}" class="card">
+                <div class="card-img">️ Imagen</div>
                 <div class="card-body">
-                    <h3>Vela Relax (Lavanda)</h3>
-                    <p>Ideal para desconectar después de un largo día.</p>
-                    <p class="card-precio">12.50 €</p>
-                    <a href="#" class="btn-ver">Ver Detalles</a>
+                    <h3 th:text="${p.name}"></h3>
+                    <p th:text="${p.description}"></p>
+                    <p class="card-precio" th:text="${p.precioBase} + ' €'"></p>
+                    <a th:href="@{/detalle/{id}(id=${p.id})}" class="btn-ver">Ver Detalles</a>
                 </div>
             </div>
-
-            <div class="card">
-                <div class="card-img">Imagen Vela Invierno</div>
-                <div class="card-body">
-                    <h3>Vela Invierno</h3>
-                    <p>Canela, naranja y clavo. Calor de hogar.</p>
-                    <p class="card-precio">14.50 €</p>
-                    <a href="#" class="btn-ver">Ver Detalles</a>
-                </div>
-            </div>
-
-            <div class="card card--destacada">
-                <div class="card-img card-img--personalizable">✨ Personalizable</div>
-                <div class="card-body">
-                    <h3>Crea tu vela</h3>
-                    <p>Tú eliges el aroma, el color y el mensaje especial.</p>
-                    <p class="card-precio">Desde 9.90 €</p>
-                    <a href="#" class="btn-ver">Personalizar ahora</a>
-                </div>
-            </div>
-
+            
         </div>
     </main>
 

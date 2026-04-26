@@ -17,7 +17,7 @@ public class Product {
     @Size(max = 64)
     private String name;
 
-    @Lob
+    @Column(columnDefinition = "TEXT")
     private String description;
 
     @Column(name = "precio_base", nullable = false, precision = 10, scale = 2)
@@ -32,7 +32,7 @@ public class Product {
 
     public enum Tipo {FIJO, PERSONALIZABLE}
 
-    @OneToMany(mappedBy = "product")
+    @OneToMany(mappedBy = "product", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private java.util.List<CampoPersonalizacion> campos;
     
     

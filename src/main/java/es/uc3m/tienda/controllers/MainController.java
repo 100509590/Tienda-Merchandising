@@ -1,16 +1,21 @@
 package es.uc3m.tienda.controllers;
 
-import es.uc3m.tienda.model.User;
-import es.uc3m.tienda.repositories.UserRepository;
+import es.uc3m.tienda.model.*;
+import es.uc3m.tienda.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.server.ResponseStatusException;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
 
 @Controller
 @RequestMapping(path = "/")
@@ -24,19 +29,19 @@ public class MainController {
     private UserRepository userRepository;
 
     @Autowired
-    private PasswordEncoder passwordEncoder; 
+    private PasswordEncoder passwordEncoder;
 
+    @Autowired
+    private ProductRepository productRepository;
 
-    // ================================================================
-    // GET — Vistas estáticas (solo renderizan una plantilla)
-    // ================================================================
 
     /**
      * Página principal — Catálogo de productos
      * URL: GET /
      */
     @GetMapping("/")
-    public String index() {
+    public String index(Model model) {
+        model.addAttribute("productos", productRepository.findByActivoTrue());
         return "index";
     }
 
@@ -44,8 +49,17 @@ public class MainController {
      * Detalle / configurador de vela
      * URL: GET /detalle
      */
-    @GetMapping("/detalle")
-    public String mostrarDetalle() {
+    @GetMapping("/detalle/{id}")
+    public String mostrarDetalle(@PathVariable Integer id, Model model) {
+        Product p = productRepository.findById(id)
+            .orElseThrow(() -> new ResponseStatusException(
+                HttpStatus.NOT_FOUND, "Producto no encontrado"));
+
+        if(!p.getActivo()){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND ,"Producto no disponible");
+        }
+
+        model.addAttribute("producto", p);
         return "detalle";
     }
 
@@ -80,15 +94,12 @@ public class MainController {
      * Panel de administración
      * URL: GET /admin
      */
+    /*
     @GetMapping("/admin")
     public String mostrarAdmin() {
         return "admin";
     }
-
-
-    // ================================================================
-    // POST — Acciones con lógica de negocio
-    // ================================================================
+    */
 
     /**
      * Procesa el formulario de registro de nuevo usuario.
@@ -124,8 +135,6 @@ public class MainController {
         }
 
         // 3. Crear usuario y hashear contraseña
-        // NUNCA guardes contraseñas en texto plano. BCrypt genera un hash
-        // irreversible que incluye el salt automáticamente.
         User nuevoUsuario = new User();
         nuevoUsuario.setName(name);
         nuevoUsuario.setEmail(email);
@@ -135,7 +144,7 @@ public class MainController {
         // 4. Persistir en base de datos
         userRepository.save(nuevoUsuario);
 
-        // 5. PRG: redirigir al login con flag de éxito para mostrar mensaje
+        // 5. Redirigir al login 
         return "redirect:/login?registered=true";
     }
 }

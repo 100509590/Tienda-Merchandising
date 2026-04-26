@@ -34,7 +34,7 @@ public class OpcionCampo {
         this.id = id;
     }
 
-    public String getEtiquta(){
+    public String getEtiqueta(){
         return etiqueta;
     } 
 
