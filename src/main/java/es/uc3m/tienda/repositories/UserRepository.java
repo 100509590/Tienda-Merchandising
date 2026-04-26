@@ -8,4 +8,3 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     // Spring Data genera el SQL automáticamente a partir del nombre del método
     User findByEmail(String email);
 }
-

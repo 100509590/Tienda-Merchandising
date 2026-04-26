@@ -3,70 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Tu Carrito | Lumina</title>
-    <link rel="stylesheet" href="../static/css/style.css" th:href="@{/css/style.css}">
-    <style>
-        .carrito-container {
-            background: white;
-            padding: 2rem;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-        }
-        .tabla-carrito {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 2rem;
-        }
-        .tabla-carrito th, .tabla-carrito td {
-            padding: 1rem;
-            text-align: left;
-            border-bottom: 1px solid #eee;
-        }
-        .tabla-carrito th {
-            background-color: var(--color-secundario);
-            color: var(--color-texto);
-        }
-        .configuracion-item {
-            font-size: 0.85rem;
-            color: #666;
-            margin-top: 0.5rem;
-        }
-        .configuracion-item ul {
-            margin: 0;
-            padding-left: 1.2rem;
-        }
-        .btn-eliminar {
-            color: #d9534f;
-            text-decoration: none;
-            font-weight: bold;
-        }
-        .btn-eliminar:hover {
-            text-decoration: underline;
-        }
-        .resumen-pedido {
-            text-align: right;
-            font-size: 1.2rem;
-        }
-        .total-destacado {
-            font-size: 1.8rem;
-            color: var(--color-primario);
-            font-weight: bold;
-            margin: 1rem 0;
-        }
-        .btn-pagar {
-            background-color: var(--color-primario);
-            color: white;
-            border: none;
-            padding: 1rem 2rem;
-            font-size: 1.1rem;
-            border-radius: 5px;
-            cursor: pointer;
-            text-decoration: none;
-            display: inline-block;
-        }
-        .btn-pagar:hover {
-            background-color: var(--color-texto);
-        }
-    </style>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
 
@@ -74,7 +11,7 @@
 
     <main>
         <h1>Tu Carrito de la Compra</h1>
-        
+
         <div class="carrito-container">
             <table class="tabla-carrito">
                 <thead>
@@ -88,15 +25,12 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>
-                            <strong>Vela Relax</strong>
-                        </td>
+                        <td><strong>Vela Relax</strong></td>
                         <td>12.50 €</td>
                         <td>1</td>
                         <td>12.50 €</td>
                         <td><a href="#" class="btn-eliminar">Eliminar</a></td>
                     </tr>
-
                     <tr>
                         <td>
                             <strong>Vela Personalizada</strong>
@@ -108,7 +42,8 @@
                                 </ul>
                             </div>
                         </td>
-                        <td>12.40 €</td> <td>2</td>
+                        <td>12.40 €</td>
+                        <td>2</td>
                         <td>24.80 €</td>
                         <td><a href="#" class="btn-eliminar">Eliminar</a></td>
                     </tr>
@@ -118,9 +53,7 @@
             <div class="resumen-pedido">
                 <p>Subtotal: 37.30 €</p>
                 <p>Gastos de envío: Calculados en el siguiente paso</p>
-                <div class="total-destacado">
-                    Total: 37.30 €
-                </div>
+                <div class="total-destacado">Total: 37.30 €</div>
                 <a href="#" class="btn-pagar">Finalizar Compra</a>
             </div>
         </div>

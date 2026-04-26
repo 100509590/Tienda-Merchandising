@@ -4,73 +4,6 @@
     <meta charset="UTF-8">
     <title>Detalle del Producto | Lumina</title>
     <link rel="stylesheet" th:href="@{/css/style.css}">
-    <style>
-        .detalle-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 3rem;
-            background: white;
-            padding: 2rem;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-        }
-        .detalle-imagen {
-            flex: 1;
-            min-width: 300px;
-            background-color: var(--color-secundario);
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 400px;
-            color: var(--color-primario);
-            font-size: 1.5rem;
-        }
-        .detalle-info {
-            flex: 1;
-            min-width: 300px;
-        }
-        .precio-destacado {
-            font-size: 2rem;
-            color: var(--color-primario);
-            font-weight: bold;
-            margin: 1rem 0;
-        }
-        .formulario-personalizacion {
-            margin-top: 2rem;
-            padding-top: 2rem;
-            border-top: 1px solid #eee;
-        }
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: bold;
-        }
-        .form-group select, .form-group input {
-            width: 100%;
-            padding: 0.8rem;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-family: inherit;
-        }
-        .btn-comprar {
-            background-color: var(--color-texto);
-            color: var(--color-texto-claro);
-            border: none;
-            padding: 1rem 2rem;
-            font-size: 1.1rem;
-            border-radius: 5px;
-            cursor: pointer;
-            width: 100%;
-            transition: background 0.3s;
-        }
-        .btn-comprar:hover {
-            background-color: var(--color-primario);
-        }
-    </style>
 </head>
 <body>
 
@@ -81,17 +14,17 @@
             <div class="detalle-imagen">
                 📸 Imagen de la Vela
             </div>
-            
+
             <div class="detalle-info">
                 <h1>Crea tu vela</h1>
                 <p>Diseña tu propia vela eligiendo aroma, color, intensidad y packaging.</p>
-                
+
                 <div class="precio-destacado">
                     Total: <span id="precio-dinamico">9.90</span> €
                 </div>
 
                 <form action="#" method="post" class="formulario-personalizacion">
-                    
+
                     <div class="form-group">
                         <label for="aroma">1. Elige el Aroma:</label>
                         <select id="aroma" name="aroma">

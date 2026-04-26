@@ -1,12 +1,29 @@
-/* style.css */
+/* ==========================================================================
+   style.css — Hoja de estilos global de Lumina
+   Contiene los estilos base + los específicos de cada vista, unificados
+   siguiendo la separación de responsabilidades HTML/CSS.
+   ========================================================================== */
+
+
+/* --------------------------------------------------------------------------
+   1. VARIABLES GLOBALES (Design Tokens)
+   -------------------------------------------------------------------------- */
 :root {
-    --color-fondo: #FDFBF7; /* Un blanco roto muy cálido */
-    --color-primario: #D4A373; /* Tono tostado/madera */
-    --color-secundario: #FAEDCD; /* Crema suave */
-    --color-texto: #3E362E; /* Marrón muy oscuro para leer bien */
-    --color-texto-claro: #FEFAE0;
+    --color-fondo:        #FDFBF7; /* Blanco roto cálido                  */
+    --color-primario:     #D4A373; /* Tostado / madera                    */
+    --color-secundario:   #FAEDCD; /* Crema suave                         */
+    --color-texto:        #3E362E; /* Marrón muy oscuro — alta legibilidad */
+    --color-texto-claro:  #FEFAE0; /* Casi blanco, sobre fondos oscuros   */
+    --color-peligro:      #d9534f; /* Rojo para acciones destructivas      */
+    --radio-borde:        8px;
+    --radio-borde-lg:     12px;
+    --sombra-card:        0 4px 15px rgba(0, 0, 0, 0.05);
 }
 
+
+/* --------------------------------------------------------------------------
+   2. RESET Y BASE
+   -------------------------------------------------------------------------- */
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: var(--color-fondo);
@@ -18,7 +35,10 @@ body {
     min-height: 100vh;
 }
 
-/* Navegación */
+
+/* --------------------------------------------------------------------------
+   3. NAVEGACIÓN
+   -------------------------------------------------------------------------- */
 nav {
     background-color: var(--color-primario);
     padding: 1rem 2rem;
@@ -38,9 +58,12 @@ nav a:hover {
     text-decoration: underline;
 }
 
-/* Contenedor principal */
+
+/* --------------------------------------------------------------------------
+   4. CONTENEDOR PRINCIPAL Y FOOTER
+   -------------------------------------------------------------------------- */
 main {
-    flex: 1; /* Para que el footer se quede abajo */
+    flex: 1;
     padding: 2rem;
     max-width: 1200px;
     margin: 0 auto;
@@ -48,11 +71,407 @@ main {
     box-sizing: border-box;
 }
 
-/* Footer */
 footer {
     background-color: var(--color-texto);
     color: var(--color-texto-claro);
     text-align: center;
     padding: 1rem;
     margin-top: auto;
+}
+
+
+/* --------------------------------------------------------------------------
+   5. COMPONENTES REUTILIZABLES
+   -------------------------------------------------------------------------- */
+
+/* --- Formulario genérico (grupos label + input) --- */
+.form-group {
+    margin-bottom: 1.5rem;
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-family: inherit;
+    box-sizing: border-box;
+}
+
+/* --- Botón principal (oscuro → dorado al hover) --- */
+.btn-auth {
+    background-color: var(--color-texto);
+    color: var(--color-texto-claro);
+    border: none;
+    padding: 1rem;
+    font-size: 1.1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    font-weight: bold;
+    transition: background 0.3s;
+}
+
+.btn-auth:hover {
+    background-color: var(--color-primario);
+}
+
+
+/* --------------------------------------------------------------------------
+   6. VISTA: INDEX — Catálogo de productos
+   -------------------------------------------------------------------------- */
+.hero {
+    text-align: center;
+    padding: 3rem 1rem;
+    background-color: var(--color-secundario);
+    margin-bottom: 2rem;
+    border-radius: var(--radio-borde);
+}
+
+.contenedor-productos {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+}
+
+.card {
+    background: white;
+    border-radius: var(--radio-borde-lg);
+    overflow: hidden;
+    box-shadow: var(--sombra-card);
+    transition: transform 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.card-img {
+    width: 100%;
+    height: 200px;
+    background-color: #eee;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #999;
+}
+
+.card-body {
+    padding: 1.5rem;
+    flex-grow: 1;
+}
+
+.card-precio {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: var(--color-primario);
+    margin: 1rem 0;
+}
+
+.btn-ver {
+    display: block;
+    text-align: center;
+    background-color: var(--color-primario);
+    color: white;
+    padding: 0.8rem;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+
+/* --------------------------------------------------------------------------
+   7. VISTA: DETALLE — Configurador de vela personalizada
+   -------------------------------------------------------------------------- */
+.detalle-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3rem;
+    background: white;
+    padding: 2rem;
+    border-radius: var(--radio-borde-lg);
+    box-shadow: var(--sombra-card);
+}
+
+.detalle-imagen {
+    flex: 1;
+    min-width: 300px;
+    background-color: var(--color-secundario);
+    border-radius: var(--radio-borde);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 400px;
+    color: var(--color-primario);
+    font-size: 1.5rem;
+}
+
+.detalle-info {
+    flex: 1;
+    min-width: 300px;
+}
+
+.precio-destacado {
+    font-size: 2rem;
+    color: var(--color-primario);
+    font-weight: bold;
+    margin: 1rem 0;
+}
+
+.formulario-personalizacion {
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid #eee;
+}
+
+.btn-comprar {
+    background-color: var(--color-texto);
+    color: var(--color-texto-claro);
+    border: none;
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    transition: background 0.3s;
+}
+
+.btn-comprar:hover {
+    background-color: var(--color-primario);
+}
+
+
+/* --------------------------------------------------------------------------
+   8. VISTA: CARRITO — Tabla de productos y resumen
+   -------------------------------------------------------------------------- */
+.carrito-container {
+    background: white;
+    padding: 2rem;
+    border-radius: var(--radio-borde-lg);
+    box-shadow: var(--sombra-card);
+}
+
+.tabla-carrito {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 2rem;
+}
+
+.tabla-carrito th,
+.tabla-carrito td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+}
+
+.tabla-carrito th {
+    background-color: var(--color-secundario);
+    color: var(--color-texto);
+}
+
+.configuracion-item {
+    font-size: 0.85rem;
+    color: #666;
+    margin-top: 0.5rem;
+}
+
+.configuracion-item ul {
+    margin: 0;
+    padding-left: 1.2rem;
+}
+
+.btn-eliminar {
+    color: var(--color-peligro);
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.btn-eliminar:hover {
+    text-decoration: underline;
+}
+
+.resumen-pedido {
+    text-align: right;
+    font-size: 1.2rem;
+}
+
+.total-destacado {
+    font-size: 1.8rem;
+    color: var(--color-primario);
+    font-weight: bold;
+    margin: 1rem 0;
+}
+
+.btn-pagar {
+    background-color: var(--color-primario);
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn-pagar:hover {
+    background-color: var(--color-texto);
+}
+
+
+/* --------------------------------------------------------------------------
+   9. VISTA: AUTH — Login y Signup
+   -------------------------------------------------------------------------- */
+.auth-container {
+    max-width: 400px;
+    margin: 2rem auto;
+    background: white;
+    padding: 2.5rem;
+    border-radius: var(--radio-borde-lg);
+    box-shadow: var(--sombra-card);
+    text-align: center;
+}
+
+.auth-container h1 {
+    color: var(--color-primario);
+    margin-bottom: 1.5rem;
+}
+
+.auth-links {
+    margin-top: 1.5rem;
+    font-size: 0.9rem;
+}
+
+.auth-links a {
+    color: var(--color-primario);
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.auth-links a:hover {
+    text-decoration: underline;
+}
+
+/* Mensaje de error en formularios */
+.error-msg {
+    color: var(--color-peligro);
+    background-color: #fdecea;
+    border: 1px solid var(--color-peligro);
+    border-radius: 5px;
+    padding: 0.7rem 1rem;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+    text-align: left;
+}
+
+
+/* --------------------------------------------------------------------------
+   10. VISTA: ADMIN — Panel de gestión
+   -------------------------------------------------------------------------- */
+.admin-container {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 2rem;
+    align-items: start;
+}
+
+@media (max-width: 900px) {
+    .admin-container {
+        grid-template-columns: 1fr;
+    }
+}
+
+.admin-card {
+    background: white;
+    padding: 1.5rem;
+    border-radius: var(--radio-borde-lg);
+    box-shadow: var(--sombra-card);
+}
+
+.admin-card h2 {
+    margin-top: 0;
+    color: var(--color-primario);
+    border-bottom: 2px solid var(--color-secundario);
+    padding-bottom: 0.5rem;
+}
+
+.tabla-admin {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tabla-admin th,
+.tabla-admin td {
+    padding: 0.8rem;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+    font-size: 0.9rem;
+}
+
+.badge {
+    padding: 0.3rem 0.6rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: bold;
+}
+
+.badge-fijo  { background: #e3f2fd; color: #1976d2; }
+.badge-perso { background: #f3e5f5; color: #7b1fa2; }
+
+.btn-accion {
+    text-decoration: none;
+    font-size: 0.8rem;
+    margin-right: 0.5rem;
+}
+
+.btn-borrar {
+    color: var(--color-peligro);
+}
+
+/* Formulario compacto del panel admin */
+.form-admin .form-group {
+    margin-bottom: 1rem;
+}
+
+.form-admin label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 0.3rem;
+}
+
+.form-admin input,
+.form-admin select,
+.form-admin textarea {
+    width: 100%;
+    padding: 0.6rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-family: inherit;
+}
+
+
+/* --------------------------------------------------------------------------
+   11. UTILIDADES
+   -------------------------------------------------------------------------- */
+
+/* Variante de card destacada (borde dorado — vela personalizable en index) */
+.card--destacada {
+    border: 2px solid var(--color-primario);
+}
+
+.card-img--personalizable {
+    background-color: var(--color-secundario);
+    color: var(--color-texto);
 }

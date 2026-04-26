@@ -1,21 +1,53 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
 </head>
 <body>
 
+    <!--
+        Fragmento: navbar
+        Se incluye en todas las vistas con: th:replace="~{fragments :: navbar}"
+
+        Muestra el nombre del usuario autenticado y un botón de cerrar sesión
+        (práctica 6, ejercicio 6). Si no hay sesión iniciada, muestra el enlace
+        de login. El bloque sec:authorize requiere thymeleaf-extras-springsecurity6
+        que ya está en el build.gradle.
+    -->
     <nav th:fragment="navbar">
         <div class="logo">
             <a th:href="@{/}">🕯️ Lumina</a>
         </div>
         <div class="enlaces">
             <a th:href="@{/}">Catálogo</a>
-            <a th:href="@{/carrito}">Carrito (0)</a>
-            <a th:href="@{/login}">Iniciar Sesión</a>
+            <a th:href="@{/carrito}">Carrito</a>
+
+            <!-- Solo visible si NO hay sesión -->
+            <span sec:authorize="isAnonymous()">
+                <a th:href="@{/login}">Iniciar Sesión</a>
+            </span>
+
+            <!-- Solo visible si HAY sesión -->
+            <span sec:authorize="isAuthenticated()">
+                <span th:text="${#authentication.principal.username}">Usuario</span>
+                <form th:action="@{/logout}" method="post" style="display:inline;">
+                    <button type="submit" style="
+                        background: none;
+                        border: none;
+                        color: var(--color-texto-claro);
+                        cursor: pointer;
+                        font-weight: bold;
+                        font-size: 1rem;
+                        margin-left: 1rem;
+                        text-decoration: underline;
+                    ">Cerrar sesión</button>
+                </form>
+            </span>
         </div>
     </nav>
 
+    <!-- Fragmento: footer -->
     <footer th:fragment="footer">
         <p>&copy; 2026 Lumina - Tu tienda de velas artesanales.</p>
     </footer>
