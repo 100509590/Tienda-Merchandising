@@ -39,55 +39,44 @@
                 </div>
 
                 <div th:if="${producto.tipo.name() == 'PERSONALIZABLE'}">
-                    <div class="precio-destacado">
-                        Total: <span id="precio-total" th:text="${producto.precioBase} + ' €'">0.00 €</span>
-                    </div>
-
-                    <form th:action="@{/carrito/añadir}" method="post"
-                          class="formulario-personalizacion">
+                    <form th:action="@{/carrito/añadir}" method="post">
                         <input type="hidden" name="productoId" th:value="${producto.id}">
-
-                        <div th:each="campo, i : ${producto.campos}" class="form-group">
-
-                            <label th:for="'campo_' + ${campo.id}"
-                                   th:text="${i.count} + '. ' + ${campo.name}
-                                            + (${campo.obligatorio} ? ' *' : ' (opcional)')">
-                            </label>
-
-                           <select th:if="${campo.tipoCampo.name() == 'SELECCION'}"
-                                    th:id="'campo_' + ${campo.id}"
-                                    th:name="'campo_' + ${campo.id}"
-                                    class="campo-precio"
-                                    th:data-base="${producto.precioBase}">
-                                <option th:each="opcion : ${campo.opciones}"
-                                        th:value="${opcion.id}"
-                                        th:text="${opcion.etiqueta}
-                                                 + (${opcion.incrementoPrecio} > 0
-                                                    ? ' (+' + ${opcion.incrementoPrecio} + '€)'
-                                                    : '')"
-                                        th:data-precio="${opcion.incrementoPrecio}">
+                
+                        <div th:each="campo : ${producto.campos}" class="form-group">
+                            <label th:text="${campo.name} + ':'"></label>
+                
+                            <select th:if="${campo.tipoCampo.name() == 'SELECCION'}" 
+                                    th:name="'campo_' + ${campo.id}" 
+                                    class="campo-precio" 
+                                    th:data-base="${producto.precioBase}" 
+                                    required>
+                                <option value="" data-precio="0">-- Selecciona una opción --</option>
+                                <option th:each="opt : ${campo.opciones}" 
+                                        th:value="${opt.id}" 
+                                        th:data-precio="${opt.incrementoPrecio}"
+                                        th:text="${opt.etiqueta} + ' (+' + ${opt.incrementoPrecio} + '€)'">
                                 </option>
                             </select>
-
-                            <input th:if="${campo.tipoCampo.name() == 'TEXTO'}"
-                                   type="text"
-                                   th:id="'campo_' + ${campo.id}"
-                                   th:name="'campo_' + ${campo.id}"
-                                   th:pattern="${campo.regexValidacion != null
-                                                ? campo.regexValidacion : ''}"
-                                   th:required="${campo.obligatorio}"
-                                   placeholder="Escribe aquí...">
+                
+                            <input th:if="${campo.tipoCampo.name() == 'TEXTO'}" 
+                                   type="text" 
+                                   th:name="'campo_' + ${campo.id}" 
+                                   placeholder="Escribe aquí..." 
+                                   th:required="${campo.obligatorio}">
                         </div>
-
+                
                         <div class="form-group">
-                            <label for="cantidad">Cantidad:</label>
-                            <input type="number" id="cantidad" name="cantidad"
-                                   value="1" min="1" max="99">
+                            <label>Cantidad:</label>
+                            <input type="number" name="cantidad" value="1" min="1" max="99">
                         </div>
-
+                
+                        <div class="precio-final-dinamico">
+                            Total estimado: <span id="precio-total" th:text="${producto.precioBase} + ' €'"></span>
+                        </div>
+                
                         <button type="submit" class="btn-comprar">Añadir al Carrito</button>
                     </form>
-                </div>
+                </div>                
 
                 <p style="margin-top: 1.5rem;">
                     <a th:href="@{/}">← Volver al catálogo</a>

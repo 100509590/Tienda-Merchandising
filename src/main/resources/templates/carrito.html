@@ -24,38 +24,38 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td><strong>Vela Relax</strong></td>
-                        <td>12.50 €</td>
-                        <td>1</td>
-                        <td>12.50 €</td>
-                        <td><a href="#" class="btn-eliminar">Eliminar</a></td>
-                    </tr>
-                    <tr>
+                    <tr th:each="item : ${items}">
                         <td>
-                            <strong>Vela Personalizada</strong>
-                            <div class="configuracion-item">
+                            <strong th:text="${item.product.name}"></strong>
+                            <div class="configuracion-item" th:if="${!item.valores.isEmpty()}">
                                 <ul>
-                                    <li>Aroma: Vainilla (+1.50€)</li>
-                                    <li>Intensidad: Fuerte (+1.00€)</li>
-                                    <li>Mensaje: "Feliz Aniversario"</li>
+                                    <li th:each="v : ${item.valores}">
+                                        <span th:text="${v.campoPersonalizacion.name} + ': ' + ${v.valorTexto}"></span>
+                                    </li>
                                 </ul>
                             </div>
                         </td>
-                        <td>12.40 €</td>
-                        <td>2</td>
-                        <td>24.80 €</td>
-                        <td><a href="#" class="btn-eliminar">Eliminar</a></td>
+                        <td th:text="${item.precioCalculado} + ' €'"></td>
+                        <td th:text="${item.cantidad}"></td>
+                        <td th:text="${item.precioCalculado * item.cantidad} + ' €'"></td>
+                        <td>
+                            <form th:action="@{/carrito/eliminar/{id}(id=${item.id})}" method="post">
+                                <button type="submit" class="btn-eliminar" style="background:none; border:none; color:red; cursor:pointer;">Eliminar</button>
+                            </form>
+                        </td>
+                    </tr>
+                    <tr th:if="${items.isEmpty()}">
+                        <td colspan="5" style="text-align:center;">Tu carrito está vacío.</td>
                     </tr>
                 </tbody>
-            </table>
-
-            <div class="resumen-pedido">
-                <p>Subtotal: 37.30 €</p>
-                <p>Gastos de envío: Calculados en el siguiente paso</p>
-                <div class="total-destacado">Total: 37.30 €</div>
-                <a href="#" class="btn-pagar">Finalizar Compra</a>
-            </div>
+                </table>
+                
+                <div class="resumen-pedido" th:if="${!items.isEmpty()}">
+                    <p>Subtotal: <span th:text="${total} + ' €'"></span></p>
+                    <p>Gastos de envío: Gratis</p>
+                    <div class="total-destacado">Total: <span th:text="${total} + ' €'"></span></div>
+                    <a href="#" class="btn-pagar">Finalizar Compra</a>
+                </div>                
         </div>
     </main>
 

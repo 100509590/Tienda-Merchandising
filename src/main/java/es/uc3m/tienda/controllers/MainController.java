@@ -64,15 +64,6 @@ public class MainController {
     }
 
     /**
-     * Carrito de la compra
-     * URL: GET /carrito
-     */
-    @GetMapping("/carrito")
-    public String mostrarCarrito() {
-        return "carrito";
-    }
-
-    /**
      * Formulario de inicio de sesión
      * URL: GET /login
      */

@@ -41,13 +41,13 @@ public class AdminController {
             @RequestParam String name,
             @RequestParam java.math.BigDecimal precioBase,
             @RequestParam Product.Tipo tipo,
-            @RequestParam(required = false) String description) {
+            @RequestParam(required = false) String descripcion) {
 
         Product p = new Product();
         p.setName(name);
         p.setPrecioBase(precioBase);
         p.setTipo(tipo);
-        p.setDescription(description);
+        p.setDescription(descripcion);
         p.setActivo(false); // por defecto inactivo hasta que el admin lo publique
         productRepository.save(p);
         return "redirect:/admin";
@@ -81,7 +81,7 @@ public class AdminController {
     }
 
     @PostMapping("/productos/{id}/campos/nuevo")
-   public String nuevoCampo(
+    public String nuevoCampo(
            @PathVariable Integer id,
            @RequestParam String name,
            @RequestParam CampoPersonalizacion.TipoCampo tipoCampo,
@@ -102,7 +102,7 @@ public class AdminController {
        campoRepository.save(campo);
  
        return "redirect:/admin/productos/" + id + "/editar";
-   }
+    }
  
    // POST /admin/campos/{campoId}/opciones/nueva — añade una opción a un campo SELECCION
    @PostMapping("/campos/{campoId}/opciones/nueva")
