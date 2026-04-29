@@ -5,6 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 import java.util.List;
 
-public interface CampoPersonalizacionRepository extends JpaRepository<Product, Integer> {
+public interface CampoPersonalizacionRepository extends JpaRepository<CampoPersonalizacion, Integer> {
     
 }
